@@ -57,6 +57,17 @@ class List {
 			return _size;
 		}
 
+		List &operator=(const List &list) {
+			_size = list._size;
+			Dlist *temp;
+			temp = list._front;
+			while(temp != nullptr) {
+				push_back(temp);
+				temp = list.next;
+			}
+			return *this;
+		}
+
 		void push_front(Data data) {
 			Dlist *newNode = new Dlist;
 			newNode->value = data;
@@ -111,10 +122,10 @@ class List {
 
 		//CONVERT THIS FUNCTION
 		void pop_back() {
-			Llist *back_to_remove = _back;
+			Dlist *back_to_remove = _back;
 
 			if(_front->next!=nullptr) {
-				Llist *new_back = _front;
+				Dlist *new_back = _front;
 				while(new_back->next!=_back) {
 					new_back=new_back->next;
 				}
@@ -137,10 +148,45 @@ class List {
 
 		//Modify this
 		void print() {
-			Llist *temp;
+			Dlist *temp;
 			for(temp=_front; temp!=nullptr; temp=temp->next) {
 				std::cout << temp->value << " ";
 			}
 			std::cout << std::endl;
 		}
+
+		void print_back() {
+			for(Dlist *temp=_back; temp!=nullptr; temp=temp->prev) {
+				std::cout << temp->value << " ";
+			}
+			std::cout << std::endl;
+		}
+
+    template<typename V> friend bool operator==(const List<V> &a, const List<V> &b);
+    template<typename V> friend bool operator!=(const List<V> &a, const List<V> &b);
 };
+template<typename V> bool operator==(const List<V> &a, const List<V> &b) {
+	auto *temp1 = a._front;
+	auto *temp2 = b._front;
+	if(a.length() != b.length()) {
+		return 0;
+	}
+	int inc = 0;
+	while(inc < a.length()) {
+		if(temp1 -> value != temp2 -> value) {
+			return 0;
+		}
+		temp1 = temp1 -> next;
+		temp2 = temp2 -> next;
+		inc++;
+	}
+	return 1;
+}
+
+template<typename V> bool operator!=(const List<V> &a, const List<V> &b) {
+	if(a == b) {
+		return 0;
+	} else {
+		return 1;
+	}
+}
