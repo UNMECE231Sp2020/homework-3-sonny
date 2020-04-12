@@ -165,20 +165,19 @@ class List {
     template<typename V> friend bool operator==(const List<V> &a, const List<V> &b);
     template<typename V> friend bool operator!=(const List<V> &a, const List<V> &b);
 };
+
 template<typename V> bool operator==(const List<V> &a, const List<V> &b) {
 	auto *temp1 = a._front;
 	auto *temp2 = b._front;
 	if(a.length() != b.length()) {
 		return 0;
 	}
-	int inc = 0;
-	while(inc < a.length()) {
+	for(int inc = 0; inc < a.length(); inc++) {
 		if(temp1 -> value != temp2 -> value) {
 			return 0;
 		}
 		temp1 = temp1 -> next;
 		temp2 = temp2 -> next;
-		inc++;
 	}
 	return 1;
 }
