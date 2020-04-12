@@ -183,9 +183,5 @@ template<typename V> bool operator==(const List<V> &a, const List<V> &b) {
 }
 
 template<typename V> bool operator!=(const List<V> &a, const List<V> &b) {
-	if(a == b) {
-		return 0;
-	} else {
-		return 1;
-	}
+	return !(a == b);
 }
